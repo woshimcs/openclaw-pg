@@ -54,7 +54,35 @@
 
 表结构由程序在启动时自动创建。
 
+## 部署指南 (Docker)
+
+本仓库提供了一键式 Docker 部署脚本，包含 OpenClaw 网关和 PostgreSQL 数据库。
+
+1. **拉取代码**：
+   ```bash
+   git clone https://github.com/woshimcs/openclaw-pg.git
+   cd openclaw-pg
+   ```
+
+2. **一键启动**：
+   ```bash
+   chmod +x setup.sh
+   ./setup.sh
+   ```
+   该脚本会自动创建 `config.json`，并启动包含 PG 和 OpenClaw 的 Docker 服务。
+
+3. **访问网关**：
+   - Gateway UI: `http://localhost:18789`
+   - 默认 Token: `sk-openclaw-token`
+   - PG 连接串（已预配置）: `postgres://openclaw:openclaw_secret@postgres:5432/openclaw_audit`
+
+4. **持久化数据**：
+   - 数据库数据存储在 docker volume `pgdata` 中。
+   - OpenClaw 配置文件挂载在当前目录的 `config.json`。
+   - 工作区数据挂载在当前目录的 `workspace/`。
+
 ## 运行要求
+
 - Node.js >= 22
 - PostgreSQL >= 13
 

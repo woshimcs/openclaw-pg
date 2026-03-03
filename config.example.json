@@ -1,0 +1,22 @@
+{
+  "audit": {
+    "enabled": true,
+    "pg": {
+      "connectionString": "postgres://openclaw:openclaw_secret@postgres:5432/openclaw_audit",
+      "schema": "public",
+      "eventsTable": "openclaw_audit_events",
+      "memoryTable": "openclaw_memory_patches",
+      "maxBatchSize": 200,
+      "flushIntervalMs": 1000
+    },
+    "agentEvents": {
+      "enabled": true,
+      "streams": ["tool", "assistant"]
+    },
+    "memory": {
+      "enabled": true,
+      "includeGlobs": ["memory/**/*.md", "MEMORY.md"],
+      "ignoreGlobs": ["**/node_modules/**", "**/.git/**"]
+    }
+  }
+}

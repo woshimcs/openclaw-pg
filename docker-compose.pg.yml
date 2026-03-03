@@ -1,0 +1,39 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: openclaw
+      POSTGRES_PASSWORD: openclaw_secret
+      POSTGRES_DB: openclaw_audit
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U openclaw -d openclaw_audit"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  openclaw:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "18789:18789"
+    environment:
+      # Use internal docker service name 'postgres'
+      # Can also use ${PG_CONNECTION_STRING} if passed via env
+      HOME: /home/node
+      TERM: xterm-256color
+      OPENCLAW_GATEWAY_TOKEN: ${OPENCLAW_GATEWAY_TOKEN:-sk-openclaw-token}
+    volumes:
+      # Mount config file. Use setup.sh to create config.json from config.example.json
+      - ./config.json:/home/node/.openclaw/config.json
+      # Mount workspace for persistence
+      - ./workspace:/home/node/.openclaw/workspace
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: ["node", "openclaw.mjs", "gateway", "--allow-unconfigured"]
+
+volumes:
+  pgdata:
