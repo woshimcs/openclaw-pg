@@ -81,6 +81,48 @@
    - OpenClaw 配置文件挂载在当前目录的 `config.json`。
    - 工作区数据挂载在当前目录的 `workspace/`。
 
+相关文件参考：
+- Compose 配置：[docker-compose.pg.yml](file:///d:/AI-work/openclaw/openclaw-src/docker-compose.pg.yml#L29-L41)
+- 安装脚本：[setup.sh](file:///d:/AI-work/openclaw/openclaw-src/setup.sh)
+
+提示：
+- 默认绑定 127.0.0.1；如需从外网访问，可使用宿主网络或在启动命令中加入 `--bind lan`。
+
+## 部署指南 (Linux 原生)
+
+无需 Docker，直接在 Linux 上部署网关与 PG（支持一键化）。
+
+1. **拉取代码**：
+   ```bash
+   git clone https://github.com/woshimcs/openclaw-pg.git
+   cd openclaw-pg
+   ```
+2. **执行原生部署**：
+   ```bash
+   chmod +x setup.sh
+   ./setup.sh native
+   ```
+   - 自动生成 `.env`（OPENCLAW_GATEWAY_TOKEN、OPENCLAW_PG_PASSWORD）
+   - 安装 Node 22 + pnpm，支持无锁文件回退安装
+   - 构建项目与 Control UI
+   - 安装 PostgreSQL、创建 `openclaw` 用户与 `openclaw_audit` 数据库
+   - 创建并启用 systemd 服务 `openclaw`
+3. **验证**：
+   ```bash
+   systemctl status openclaw
+   curl -sS -o /dev/null -w '%{http_code}' http://127.0.0.1:18789/healthz
+   ```
+
+## 仅用 Git 拉取一键部署
+
+- Docker 模式：`./setup.sh`
+- 原生模式：`./setup.sh native`
+
+两种模式均会：
+- 生成 `.env` 并写入网关密钥与 PG 密码
+- 创建 `config.json`（由 `config.example.json` 生成）
+- 挂载/创建 `workspace/` 目录以持久化工作区
+
 ## 运行要求
 
 - Node.js >= 22
