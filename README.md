@@ -73,8 +73,8 @@
 
 3. **访问网关**：
    - Gateway UI: `http://localhost:18789`
-   - 默认 Token: `sk-openclaw-token`
-   - PG 连接串（已预配置）: `postgres://openclaw:openclaw_secret@postgres:5432/openclaw_audit`
+   - Token/PG 密码：首次运行由 `setup.sh` 自动生成并写入 `.env`
+   - PG 连接串：`postgres://openclaw:${OPENCLAW_PG_PASSWORD}@postgres:5432/openclaw_audit`
 
 4. **持久化数据**：
    - 数据库数据存储在 docker volume `pgdata` 中。

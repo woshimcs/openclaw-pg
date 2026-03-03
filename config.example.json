@@ -2,7 +2,7 @@
   "audit": {
     "enabled": true,
     "pg": {
-      "connectionString": "postgres://openclaw:openclaw_secret@postgres:5432/openclaw_audit",
+      "connectionString": "postgres://openclaw:${OPENCLAW_PG_PASSWORD}@postgres:5432/openclaw_audit",
       "schema": "public",
       "eventsTable": "openclaw_audit_events",
       "memoryTable": "openclaw_memory_patches",
