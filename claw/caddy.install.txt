@@ -1,0 +1,4 @@
+handle /install.sh {
+  header Content-Type text/plain
+  file_server
+}

@@ -133,5 +133,43 @@
 - `src/config/`：审计配置 schema / hints / UI labels
 - `ui/src/ui/views/`：Control UI 配置入口
 
+## CLI 安装（npm / pnpm）
+
+若希望像官方安装页面一样通过 CLI 快速使用（无需容器）：
+
+- npm：
+  ```bash
+  npm install -g openclaw@latest
+  openclaw onboard --install-daemon
+  ```
+- pnpm：
+  ```bash
+  pnpm add -g openclaw@latest
+  pnpm approve-builds -g        # 首次安装需批准带构建脚本的包
+  openclaw onboard --install-daemon
+  ```
+
+安装后验证：
+```bash
+openclaw doctor         # 检查配置问题
+openclaw status         # 网关状态
+openclaw dashboard      # 打开浏览器 UI
+```
+
+PATH 故障排查（找不到 openclaw 命令时）：
+```bash
+node -v
+npm -v
+npm prefix -g
+echo "$PATH"
+```
+- 若 `$(npm prefix -g)/bin`（macOS/Linux）或 `$(npm prefix -g)`（Windows）不在 PATH，需加入：
+  ```bash
+  export PATH="$(npm prefix -g)/bin:$PATH"
+  ```
+  Windows 将 `npm prefix -g` 的输出加到系统 PATH。
+
+更多安装方式与维护指引见文档：[install/index.md](file:///d:/AI-work/openclaw/openclaw-src/docs/install/index.md)
+
 ## 授权
 MIT

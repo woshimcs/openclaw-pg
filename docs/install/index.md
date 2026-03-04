@@ -69,6 +69,30 @@ For VPS/cloud hosts, avoid third-party "1-click" marketplace images when possibl
 
   </Accordion>
 
+  <Accordion title="Self-hosted installer (openclaw-pg)" icon="server">
+    If you maintain your own OpenClaw deployment repo (for example an audit-enabled fork), you can host a copy of this repo’s installer at `https://<your-domain>/install.sh`, then install on fresh machines with:
+
+    ```bash
+    curl -fsSL https://<your-domain>/install.sh | bash
+    ```
+
+    This repo provides an installer script at:
+
+    ```bash
+    curl -fsSL https://raw.githubusercontent.com/woshimcs/openclaw-pg/main/openclaw-src/claw/install.sh | bash
+    ```
+
+    Environment overrides (optional):
+    - OPENCLAW_PG_REPO: override git repo URL
+    - OPENCLAW_PG_DIR: install directory (default: `~/openclaw-pg`)
+    - OPENCLAW_PG_REF: checkout a branch/tag/sha
+    - OPENCLAW_PG_MODE: `docker` (default) or `native`
+
+    Notes:
+    - `docker` mode runs `setup.sh` to start Gateway + Postgres.
+    - If `https://<your-domain>/install.sh` returns HTML (Control UI), your web server is not serving the script as a static file.
+  </Accordion>
+
   <Accordion title="npm / pnpm" icon="package">
     If you already have Node 22+ and prefer to manage the install yourself:
 
